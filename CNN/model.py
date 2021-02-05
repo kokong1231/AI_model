@@ -7,7 +7,7 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping
 import numpy
 import tensorflow as tf
 import matplotlib.pyplot as plt
-import sys
+# import sys
 import os
 
 
