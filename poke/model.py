@@ -4,6 +4,7 @@ from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 
 import matplotlib.pyplot as plt
+import matplotlib.image as img
 
 import numpy
 from numpy.core.records import array
@@ -22,11 +23,34 @@ tf.random.set_seed(3)
 
 
 
-data = pd.read_csv('./pokemon_sort.py')
 
+# train = pd.read_csv('./pokemon_sort.csv')
+# test = pd.read_csv('./temp.csv')
 
+train = list([0]*809 for x in range(809))
+test = list([0]*809 for x in range(14))
 
-(X_train, Y_class_train), (X_test, Y_class_test) = array([],data['Name']), array([],[])
+for x in range(809):
+    train[x][x] = 1
+
+for x in range(14):
+    test[x][x] = 1
+
+data = []
+data_test = []
+
+for x in os.listdir('./Image/'):
+    data.append(img.imread('./Image/'+x))
+
+for y in os.listdir('./test/'):
+    data_test.append(img.imread('./test/'+y))
+
+print(data[15][0][1], data[16][0][1])
+data = array(data)
+data_test = array(data_test)
+
+X_train, Y_class_train = array(data, array(train))
+X_test, Y_class_test = array(data_test, array(test))
 
 print("train image : %d " % (X_train.shape[0]))
 print("test image : %d " % (X_test.shape[0]))
@@ -38,8 +62,8 @@ print("test image : %d " % (X_test.shape[0]))
 
 
 
-X_train = X_train.reshape(X_train.shape[0], 28, 28, 1).astype('float64')/255
-X_test = X_test.reshape(X_test.shape[0], 28, 28, 1).astype('float64')/255
+X_train = X_train.reshape(X_train.shape[0], 120, 120, 3).astype('float64')/255
+X_test = X_test.reshape(X_test.shape[0], 120, 120, 3).astype('float64')/255
 
 
 
@@ -50,8 +74,8 @@ X_test = X_test.reshape(X_test.shape[0], 28, 28, 1).astype('float64')/255
 
 
 
-Y_train = np_utils.to_categorical (Y_class_train, 10)
-Y_test = np_utils.to_categorical (Y_class_test, 10)
+Y_train = np_utils.to_categorical (Y_class_train, 809)
+Y_test = np_utils.to_categorical (Y_class_test, 14)
 
 
 

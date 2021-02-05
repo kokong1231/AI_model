@@ -6,12 +6,16 @@ import matplotlib.pyplot as plt
 import matplotlib.image as img
 
 
-path = './Image/'
-file_list = os.listdir(path)
+# path = './Image/'
+# file_list = os.listdir(path)
 
-image = img.imread(path+file_list[0])
-plt.imshow(image)
+image = []
+# plt.imshow(image)
+# plt.show()
+
+# pix = np.array(image)
+for x in os.listdir('./Image/'):
+    image.append(img.imread('./Image/'+x))
+
+plt.imshow(image[0])
 plt.show()
-
-pix = np.array(image)
-print(image.size)
