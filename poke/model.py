@@ -6,7 +6,7 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping
 import matplotlib.pyplot as plt
 import matplotlib.image as img
 
-import numpy
+import numpy as np
 from numpy.core.records import array
 import tensorflow as tf
 
@@ -27,15 +27,18 @@ tf.random.set_seed(3)
 # train = pd.read_csv('./pokemon_sort.csv')
 # test = pd.read_csv('./temp.csv')
 
-train = list([0]*809 for x in range(809))
-test = list([0]*809 for x in range(14))
 
-for x in range(809):
+
+'''
+train = list([0]*721 for x in range(721))
+test = list([0]*721 for x in range(14))
+
+for x in range(721):
     train[x][x] = 1
 
 for x in range(14):
     test[x][x] = 1
-
+'''
 data = []
 data_test = []
 
@@ -45,12 +48,12 @@ for x in os.listdir('./Image/'):
 for y in os.listdir('./test/'):
     data_test.append(img.imread('./test/'+y))
 
-print(data[15][0][1], data[16][0][1])
+
 data = array(data)
 data_test = array(data_test)
 
-X_train, Y_class_train = array(data, array(train))
-X_test, Y_class_test = array(data_test, array(test))
+X_train, Y_class_train = data, train
+X_test, Y_class_test = data_test, test
 
 print("train image : %d " % (X_train.shape[0]))
 print("test image : %d " % (X_test.shape[0]))
@@ -62,11 +65,6 @@ print("test image : %d " % (X_test.shape[0]))
 
 
 
-X_train = X_train.reshape(X_train.shape[0], 120, 120, 3).astype('float64')/255
-X_test = X_test.reshape(X_test.shape[0], 120, 120, 3).astype('float64')/255
-
-
-
 # for x in X_train[0]:
 #     for y in x:
 #         sys.stdout.write('%0.1f\t' % y)
@@ -74,14 +72,14 @@ X_test = X_test.reshape(X_test.shape[0], 120, 120, 3).astype('float64')/255
 
 
 
-Y_train = np_utils.to_categorical (Y_class_train, 809)
+Y_train = np_utils.to_categorical (Y_class_train, 721)
 Y_test = np_utils.to_categorical (Y_class_test, 14)
 
 
 
 model = Sequential()
 
-model.add(Conv2D(32, kernel_size=(3, 3), input_shape=(28, 28, 1), activation='relu'))
+model.add(Conv2D(32, kernel_size=(3, 3), input_shape=(120, 120, 1), activation='relu'))
 model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 model.add(Dropout(0.25))
