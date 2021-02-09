@@ -11,6 +11,6 @@
 <img src="../Image/data_image/gd_3.png" width="600" height="370">
 
 ## 2000번의 학습 중 갱신된 기울기 수치
-<img src="../Image/data_image/dg_text.png" width="600" height="370">
+<img src="../Image/data_image/gd_text.png" width="600" height="370">
 
     - 위와 같이 기울기를 갱신하여 모델의 정확도를 높인다.
